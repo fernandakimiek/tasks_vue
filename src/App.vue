@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Tasks</h1>
+    <task-grid :tasks="tasks"></task-grid>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskGrid from './components/TaskGrid.vue'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  components: { TaskGrid },
+  data() {
+    return {
+      tasks: [
+       { name: 'Lavar a louça', pending: false },
+       { name: 'Comprar roupa', pending: true }
+      ]
+    }
   }
 }
 </script>
 
 <style>
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: linear-gradient(to right, rgb(22,34,42), rgb(58, 96, 115));
+  color: #FFF;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+ display: flex;
+ flex: 1;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ }
+
+#app h1 {
+  margin-bottom: 5px;
+  font-weight: 300;
+  font-size: 3rem;
 }
 </style>
