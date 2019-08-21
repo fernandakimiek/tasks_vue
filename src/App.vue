@@ -1,41 +1,54 @@
 <template>
   <div id="app">
     <h1>Tasks</h1>
-    <task-grid :tasks="tasks"></task-grid>
+    <new-task @taskAdded="addTask" />
+    <task-grid @taskDeleted="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
-import TaskGrid from './components/TaskGrid.vue'
+import TaskGrid from "./components/TaskGrid.vue";
+import NewTask from "./components/NewTask.vue";
 
 export default {
-  components: { TaskGrid },
+  components: { TaskGrid, NewTask },
   data() {
     return {
-      tasks: [
-       { name: 'Lavar a louça', pending: false },
-       { name: 'Comprar roupa', pending: true }
-      ]
+      tasks: []
+    };
+  },
+  methods: {
+    addTask(task) {
+      const sameName = t => t.name === task.name;
+      const reallyNew = this.tasks.filter(sameName).length == 0;
+      if (reallyNew) {
+        this.tasks.push({
+          name: task.name,
+          pending: task.pending || true
+        });
+      }
+    },
+    deleteTask(i) {
+      this.tasks.splice(i, 1)
     }
   }
-}
+};
 </script>
 
 <style>
-
 body {
-  font-family: 'Lato', sans-serif;
-  background: linear-gradient(to right, rgb(22,34,42), rgb(58, 96, 115));
-  color: #FFF;
+  font-family: "Lato", sans-serif;
+  background: linear-gradient(to right, rgb(22, 34, 42), rgb(58, 96, 115));
+  color: #fff;
 }
 #app {
- display: flex;
- flex: 1;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- height: 100vh;
- }
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
 #app h1 {
   margin-bottom: 5px;
